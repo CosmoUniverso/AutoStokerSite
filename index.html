@@ -1,256 +1,127 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AUTOSTOKER // ROBOTGAMES 2026 // DOSSIER TECNICO</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap');
-
-:root{
---neon-orange:#ff6a00;
---neon-blue:#00d4ff;
---bg-dark:#000208;
---glass-panel:rgba(0,212,255,0.08);
---grid-line:rgba(0,212,255,0.1);
-}
-
-*{box-sizing:border-box;cursor:crosshair;}
-body{
-margin:0;
-background-color:var(--bg-dark);
-color:#e0e0e0;
-font-family:'Share Tech Mono',monospace;
-overflow-x:hidden;
-background-image:
-linear-gradient(var(--grid-line) 1px,transparent 1px),
-linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
-background-size:40px 40px;
-}
-
-.scan-line{
-position:fixed;width:100%;height:2px;
-background:linear-gradient(90deg,transparent,var(--neon-blue),transparent);
-box-shadow:0 0 15px var(--neon-blue);
-z-index:9999;opacity:.6;pointer-events:none;
-animation:scan 6s linear infinite;
-}
-@keyframes scan{0%{top:-10%;}100%{top:110%;}}
-
-.progress-bar{
-position:fixed;top:0;left:0;height:4px;
-background:linear-gradient(90deg,var(--neon-orange),var(--neon-blue));
-z-index:10000;width:0%;transition:.2s;
-}
-
-.section{
-min-height:100vh;
-padding:100px 10%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-}
-
-h1,h2,h3{font-family:'Orbitron',sans-serif;text-transform:uppercase;}
-
-.hero-title{
-font-size:clamp(3.5rem,12vw,7rem);
-color:var(--neon-orange);
-text-shadow:0 0 20px rgba(255,106,0,.5);
-margin:0;
-}
-
-.data-panel{
-background:var(--glass-panel);
-backdrop-filter:blur(8px);
-border:1px solid var(--neon-blue);
-border-radius:5px;
-padding:40px;
-margin:25px 0;
-transition:.3s;
-}
-.data-panel:hover{
-border-color:var(--neon-orange);
-transform:translateY(-5px);
-}
-
-.icon{
-display:inline-block;width:30px;height:30px;
-margin-right:15px;background:var(--neon-orange);
-border-radius:3px;
-}
-
-.tech-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;margin-top:30px;
-}
-
-.sub-panel{
-background:rgba(255,255,255,.03);
-border:1px solid rgba(0,212,255,.15);
-padding:20px;border-radius:3px;
-}
-
-.robot-display{
-border:2px solid var(--neon-blue);
-padding:10px;background:#000;
-margin:40px auto;max-width:850px;text-align:center;
-}
-.robot-display img{max-width:100%;}
-
-.accent{color:var(--neon-orange);font-weight:700;}
-.blue-highlight{color:var(--neon-blue);}
-
-footer{text-align:center;padding:50px;border-top:1px solid var(--neon-blue);opacity:.6;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOSTOKER | IIS Torricelli</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav id="navbar">
+        <div class="nav-content">
+            <div class="logo">AUTOSTOKER</div>
+            <ul class="nav-links">
+                <li><a href="#visione">Visione</a></li>
+                <li><a href="#architettura">Architettura</a></li>
+                <li><a href="#locomozione">Locomozione</a></li>
+                <li><a href="#sostenibilita">Sostenibilità</a></li>
+                <li><a href="#software">Software</a></li>
+                <li><a href="#team">Team</a></li>
+            </ul>
+            <button id="theme-toggle" aria-label="Cambia Tema">🌓</button>
+        </div>
+    </nav>
 
-<div class="scan-line"></div>
-<div class="progress-bar" id="myBar"></div>
+    <header class="hero">
+        <div class="hero-text">
+            <h1>AUTOSTOKER</h1>
+            [cite_start]<p class="subtitle">Il prototipo di robot mobile intelligente per l'automazione industriale sostenibile[cite: 2].</p>
+            [cite_start]<p class="school">Un progetto del team dell'IIS Torricelli di Milano[cite: 2].</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1600" alt="Tecnologia robotica" class="hero-image">
+    </header>
 
-<section class="section" style="text-align:center;">
-<p class="blue-highlight">[ SYSTEM ONLINE ]</p>
-<h1 class="hero-title">AUTOSTOKER</h1>
-<p style="font-size:1.5rem;color:var(--neon-orange);margin-top:20px;">
-ROBOT INDUSTRIALE SOSTENIBILE
-</p>
-</section>
+    <section id="visione" class="section text-center">
+        <div class="container">
+            <h2>Visione del Progetto</h2>
+            [cite_start]<p class="lead">AUTOSTOKER è stato concepito come soluzione sperimentale per ambienti produttivi e logistici, capace di supportare attività operative quali movimentazione oggetti, assistenza ai processi e monitoraggio ambientale[cite: 4].</p>
+            [cite_start]<p>L'intero sistema nasce con l'obiettivo di dimostrare concretamente come robotica, efficienza energetica e integrazione software-hardware possano convergere in una piattaforma tecnologica modulare e scalabile, seguendo un approccio ingegneristico multidisciplinare[cite: 5].</p>
+        </div>
+    </section>
 
-<section class="section">
-<div class="data-panel">
-<h2><span class="icon"></span>DESCRIZIONE PROGETTO</h2>
+    <section id="architettura" class="section bg-alt">
+        <div class="container grid-2">
+            <div class="text-content">
+                <h2>Architettura Meccanica e Strutturale</h2>
+                [cite_start]<p>Dal punto di vista strutturale, il robot adotta un'architettura innovativa basata su due arti mobili indipendenti (gambe)[cite: 7]. [cite_start]Questa soluzione è stata scelta per ottimizzare la distribuzione delle masse e la stabilità dinamica[cite: 8].</p>
+                <ul>
+                    [cite_start]<li><strong>Il Corpo Centrale:</strong> Costituisce il busto strutturale portante, rigidamente integrato con il telaio principale[cite: 9]. [cite_start]Al suo interno sono alloggiati i moduli elettronici, sensoriali ed energetici, configurati per garantire la massima protezione dei componenti e un bilanciamento dei pesi ottimale[cite: 10].</li>
+                    [cite_start]<li><strong>Sistema di Manipolazione:</strong> Per le operazioni di presa, AUTOSTOKER utilizza un meccanismo costituito da due bracci lineari contrapposti[cite: 11]. [cite_start]Questa soluzione garantisce una forza uniforme sull'oggetto, robustezza strutturale ed efficienza energetica superiore rispetto a sistemi articolati complessi[cite: 12].</li>
+                </ul>
+            </div>
+            <div class="image-content">
+                <img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&q=80&w=800" alt="Struttura meccanica">
+            </div>
+        </div>
+    </section>
 
-<p><strong>AUTOSTOKER</strong> è un robot mobile intelligente progettato come piattaforma dimostrativa di automazione industriale sostenibile. Il sistema nasce con l’obiettivo di integrare competenze di progettazione meccanica, elettronica e sviluppo software in un’unica architettura robotica funzionante e modulare.</p>
+    <section id="locomozione" class="section">
+        <div class="container text-center">
+            <h2>Sistema di Locomozione Avanzato</h2>
+            [cite_start]<p class="lead">Il sistema di movimento è il cuore tecnologico del prototipo[cite: 14].</p>
+            [cite_start]<p>Ogni "piede" del robot integra un set di due ruote con funzioni sdoppiate[cite: 15]:</p>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Ruota Anteriore (Sterzo)</h3>
+                    <p>Dedicata esclusivamente alla direzione. [cite_start]Essendo priva di trazione, permette una precisione millimetrica nelle manovre e riduce drasticamente gli attriti durante i cambi di traiettoria[cite: 16].</p>
+                </div>
+                <div class="card">
+                    <h3>Ruota Posteriore (Trazione)</h3>
+                    [cite_start]<p>Dedicata esclusivamente alla spinta e alla forza motrice[cite: 17]. [cite_start]Questa configurazione ibrida permette un controllo dinamico superiore, evitando slittamenti e ottimizzando il consumo energetico durante lo spostamento di carichi pesanti[cite: 18].</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>La struttura meccanica adotta una configurazione innovativa basata su due arti mobili indipendenti che supportano il telaio principale. Il corpo centrale rappresenta il modulo strutturale portante del robot ed è rigidamente integrato con la struttura, ospitando al suo interno elettronica, sensori e sistemi energetici per garantire protezione, stabilità e corretta distribuzione delle masse.</p>
+    <section id="sostenibilita" class="section bg-alt">
+        <div class="container grid-2 reverse">
+            <div class="text-content">
+                <h2>Sostenibilità e Industria 5.0</h2>
+                [cite_start]<p>Particolare attenzione è stata dedicata all'impatto ambientale e all'efficienza[cite: 20]:</p>
+                <ul>
+                    [cite_start]<li><strong>Materiali:</strong> La struttura e i componenti meccanici sono progettati per la manifattura additiva (stampa 3D) utilizzando materiali plastici riciclati[cite: 21].</li>
+                    [cite_start]<li><strong>Gestione Energetica:</strong> Il sistema integra batterie ricaricabili supportate da moduli solari e un dispositivo di recupero dell'energia cinetica (KERS) durante le fasi di decelerazione, riducendo gli sprechi energetici nel ciclo operativo[cite: 22, 23].</li>
+                </ul>
+            </div>
+            <div class="image-content">
+                <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&q=80&w=800" alt="Sostenibilità">
+            </div>
+        </div>
+    </section>
 
-<div class="tech-grid">
-<div class="sub-panel">
-<h3 class="accent">VISIONE</h3>
-<p>Dimostrare come robotica avanzata e sostenibilità possano coesistere in un sistema reale.</p>
-</div>
+    <section id="software" class="section text-center">
+        <div class="container">
+            <h2>Architettura Software e Controllo</h2>
+            [cite_start]<p class="lead">L'intelligenza del robot gestisce in modo coordinato locomozione e sensoristica attraverso tre modalità operative[cite: 25]:</p>
+            <div class="cards-grid three-cols">
+                <div class="card">
+                    <h3>1. Controllo Remoto</h3>
+                    [cite_start]<p>Wireless: Per manovre manuali d'emergenza o precisione[cite: 26].</p>
+                </div>
+                <div class="card">
+                    <h3>2. Modalità Automatica</h3>
+                    [cite_start]<p>Basata su algoritmi intelligenti per la navigazione autonoma[cite: 26, 27].</p>
+                </div>
+                <div class="card">
+                    <h3>3. Piattaforma Web</h3>
+                    [cite_start]<p>Gestionale: Per il monitoraggio costante, la configurazione dei parametri e la sicurezza operativa contro comandi non autorizzati[cite: 28].</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="sub-panel">
-<h3 class="accent">APPROCCIO</h3>
-<p>Progettazione modulare, scalabile e migliorabile nel tempo.</p>
-</div>
-</div>
+    <section id="team" class="section bg-alt text-center">
+        <div class="container">
+            <h2>Ruoli del Team di Sviluppo</h2>
+            <div class="team-list">
+                [cite_start]<p><strong>Daniele Atienza:</strong> Progettazione hardware e struttura meccanica[cite: 30].</p>
+                [cite_start]<p><strong>Manuel Prati:</strong> Sviluppo software e sistemi di controllo[cite: 31].</p>
+                [cite_start]<p><strong>Lorenzo Ebraico:</strong> Programmazione hardware e integrazione elettronica[cite: 32].</p>
+            </div>
+            <p style="margin-top: 40px; font-size: 0.9em; opacity: 0.7;">Restiamo a disposizione per eventuali approfondimenti tecnici o dimostrazioni operative del prototipo. [cite_start]Cordiali saluti, Team AUTOSTOKER[cite: 33, 34].</p>
+        </div>
+    </section>
 
-</div>
-</section>
-
-<section class="section">
-<div class="data-panel">
-<h2><span class="icon"></span>FUNZIONAMENTO</h2>
-
-<p>Il sistema di locomozione utilizza una configurazione ibrida a funzioni separate: ogni gamba integra una ruota anteriore direzionale dedicata allo sterzo e una ruota posteriore motorizzata dedicata alla trazione. Questa soluzione consente movimenti precisi, stabilità dinamica e riduzione degli attriti durante le manovre.</p>
-
-<p>Il robot è dotato di un sistema di presa costituito da due bracci lineari contrapposti che permettono di afferrare oggetti con forza uniforme e controllata. Sensori di distanza e modulo visivo consentono rilevamento ambientale e interazione intelligente.</p>
-
-<ul>
-<li>Controllo remoto wireless</li>
-<li>Modalità automatica intelligente</li>
-<li>Piattaforma gestionale web</li>
-</ul>
-
-</div>
-</section>
-
-<section class="section">
-<div class="data-panel">
-<h2><span class="icon"></span>SPECIFICHE TECNICHE</h2>
-
-<div class="tech-grid">
-
-<div class="sub-panel">
-<h3 class="accent">MECCANICA</h3>
-<ul>
-<li>Componenti stampati in 3D con plastica riciclata</li>
-<li>Struttura modulare leggera</li>
-<li>Locomozione ibrida direzione/trazione</li>
-<li>Doppio braccio lineare di presa</li>
-</ul>
-</div>
-
-<div class="sub-panel">
-<h3 class="accent">ELETTRONICA</h3>
-<ul>
-<li>Microcontrollore embedded</li>
-<li>Motori elettrici</li>
-<li>Sensori distanza</li>
-<li>Modulo telecamera</li>
-<li>Wireless integrato</li>
-<li>Batterie + pannelli solari + recupero energia</li>
-</ul>
-</div>
-
-</div>
-
-<div class="robot-display">
-<img src="robot.png">
-<p class="blue-highlight">MODELLO CONCETTUALE</p>
-</div>
-
-</div>
-</section>
-
-<section class="section">
-<div class="data-panel">
-<h2><span class="icon"></span>ARCHITETTURA SOFTWARE</h2>
-
-<ul>
-<li>Firmware di controllo locomozione e attuatori</li>
-<li>Algoritmi intelligenti di riconoscimento oggetti</li>
-<li>Sistema decisionale automatico</li>
-<li>Piattaforma web con autenticazione utenti</li>
-<li>Protezione da comandi non autorizzati</li>
-</ul>
-
-</div>
-</section>
-
-<section class="section">
-<div class="data-panel">
-<h2><span class="icon"></span>TEAM</h2>
-
-<div class="tech-grid">
-
-<div class="sub-panel">
-<h3 class="accent">Daniele Atienza</h3>
-<p>Progettazione hardware e struttura meccanica</p>
-</div>
-
-<div class="sub-panel">
-<h3 class="accent">Manuel Prati</h3>
-<p>Sviluppo software e logiche di controllo</p>
-</div>
-
-<div class="sub-panel">
-<h3 class="accent">Lorenzo Ebraico</h3>
-<p>Programmazione hardware e integrazione elettronica</p>
-</div>
-
-</div>
-</div>
-</section>
-
-<footer>
-<p>AUTOSTOKER — IIS TORRICELLI MILANO</p>
-<p class="blue-highlight">Robotica intelligente per industria sostenibile</p>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-AOS.init();
-window.onscroll=function(){
-var winScroll=document.body.scrollTop||document.documentElement.scrollTop;
-var height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-document.getElementById("myBar").style.width=(winScroll/height)*100+"%";
-};
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
