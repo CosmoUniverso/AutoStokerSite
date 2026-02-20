@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galleria | AUTOSTOKER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">AUTOSTOKER</a>
+            <ul class="nav-links">
+                <li><a href="index.html#visione">Visione</a></li>
+                <li><a href="index.html#architettura">Architettura</a></li>
+                <li><a href="index.html#locomozione">Locomozione</a></li>
+                <li><a href="index.html#sostenibilita">Sostenibilità</a></li>
+                <li><a href="index.html#software">Software</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="modello.html">Modello 3D</a></li>
+                <li><a href="galleria.html" style="color: var(--text-primary); font-weight: 700;">Galleria</a></li>
+            </ul>
+            <label class="theme-switch" aria-label="Cambia Tema">
+                <input type="checkbox" id="theme-checkbox">
+                <span class="slider round">
+                    <span class="icon sun">☀️</span>
+                    <span class="icon moon">🌙</span>
+                </span>
+            </label>
+        </div>
+    </nav>
+
+    <section class="section text-center" style="padding-top: 150px;">
+        <div class="container animate-block" data-animation="fadeUp">
+            <h1 class="gradient-text">Galleria Immagini</h1>
+            <p class="lead">Un'esplorazione visiva del progetto AUTOSTOKER.</p>
+            
+            <div class="gallery-grid stagger-box">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Robotica"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&q=80&w=800" alt="Struttura Meccanica"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&q=80&w=800" alt="Sostenibilità"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800" alt="Controllo Remoto"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800" alt="Autonomia"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="Interfaccia Web"></div>
+            </div>
+            
+            <div style="margin-top: 50px;">
+                <a href="index.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">&larr; Torna alla pagina principale</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>via U. Dini, 7 - 20142 - 201xx Milano (MI)</p>
+            <p>Tel 02/89511344 - Mail: <a href="mailto:miis101008@istruzione.it">miis101008@istruzione.it</a> - PEC: <a href="mailto:miis101008@pec.istruzione.it">miis101008@pec.istruzione.it</a></p>
+            <p>Codice meccanografico: MIIS101008 - C.F. 97324880158</p>
+        </div>
+    </footer>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <span class="lightbox-prev">&#10094;</span>
+        <img class="lightbox-content" id="lightbox-img" alt="Immagine Ingrandita">
+        <span class="lightbox-next">&#10095;</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
