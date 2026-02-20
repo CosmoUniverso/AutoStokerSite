@@ -1,259 +1,160 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUTOSTOKER | IIS Torricelli</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-</head>
-<body>
-    <nav id="navbar">
-        <div class="nav-content">
-            <a href="#" class="logo">AUTOSTOKER</a>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Gestione Tema (Switch Checkbox) ---
+    const themeCheckbox = document.getElementById('theme-checkbox');
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if(themeCheckbox) themeCheckbox.checked = (theme === 'dark');
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else {
+        setTheme(prefersDarkScheme.matches ? 'dark' : 'light');
+    }
+
+    if(themeCheckbox) {
+        themeCheckbox.addEventListener('change', (e) => {
+            setTheme(e.target.checked ? 'dark' : 'light');
+        });
+    }
+
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            setTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+
+    // --- Smart Navbar (Nascondi giù, Mostra su) ---
+    let lastScrollTop = 0;
+    const navbar = document.getElementById('navbar');
+
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 80) {
+                navbar.classList.add('nav-hidden');
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollTop = scrollTop;
+        });
+    }
+
+    // --- Animazioni allo Scroll (Intersection Observer) ---
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const targets = document.querySelectorAll('.animate-block, .stagger-box');
+    targets.forEach(target => observer.observe(target));
+
+    // --- ZOOM MANUALE DEL MODELLO 3D (FIX INFALLIBILE) ---
+    const modelViewer = document.getElementById('robot-viewer');
+    if (modelViewer) {
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        
+        zoomInBtn.addEventListener('click', () => {
+            // Estrae l'orbita attuale e riduce il raggio per avvicinarsi forzatamente
+            const orbit = modelViewer.getCameraOrbit();
+            modelViewer.cameraOrbit = `${orbit.theta}rad ${orbit.phi}rad ${orbit.radius * 0.7}m`;
+        });
+        
+        zoomOutBtn.addEventListener('click', () => {
+            // Aumenta il raggio per allontanarsi
+            const orbit = modelViewer.getCameraOrbit();
+            modelViewer.cameraOrbit = `${orbit.theta}rad ${orbit.phi}rad ${orbit.radius * 1.3}m`;
+        });
+    }
+
+    // --- LIGHTBOX GALLERIA IMMAGINI (FIX) ---
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        const lightboxImg = document.getElementById('lightbox-img');
+        const images = document.querySelectorAll('.gallery-item img');
+        const closeBtn = document.querySelector('.close-lightbox');
+        const nextBtn = document.querySelector('.lightbox-next');
+        const prevBtn = document.querySelector('.lightbox-prev');
+        let currentIndex = 0;
+
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active'); // Usa la classe invece del display inline
+                lightboxImg.src = img.src;
+                currentIndex = index;
+            });
+        });
+
+        closeBtn.addEventListener('click', () => { lightbox.classList.remove('active'); });
+        lightbox.addEventListener('click', (e) => {
+            if(e.target === lightbox) lightbox.classList.remove('active');
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            lightboxImg.src = images[currentIndex].src;
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            lightboxImg.src = images[currentIndex].src;
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowRight') nextBtn.click();
+                if (e.key === 'ArrowLeft') prevBtn.click();
+                if (e.key === 'Escape') closeBtn.click();
+            }
+        });
+    }
+});
+
+// =========================================
+// SMART NAVBAR HIGHLIGHT (SCROLLSPY FIX)
+// =========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section[id]'); 
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+        let currentId = '';
+        const scrollPosition = window.scrollY;
+
+        // Se siamo in cima alla pagina, rimuovi tutti gli highlight
+        if (scrollPosition < 100) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            return;
+        }
+
+        // Trova la sezione attualmente visibile
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
             
-            <ul class="nav-links">
-                <li><a href="#visione">Visione</a></li>
-                <li><a href="#architettura">Architettura</a></li>
-                <li><a href="#locomozione">Locomozione</a></li>
-                <li><a href="#sostenibilita">Sostenibilità</a></li>
-                <li><a href="#software">Software</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="modello.html">Modello 3D</a></li>
-                <li><a href="galleria.html">Galleria</a></li>
-            </ul>
-            
-            <label class="theme-switch" aria-label="Cambia Tema">
-                <input type="checkbox" id="theme-checkbox">
-                <span class="slider round">
-                    <span class="icon sun">☀️</span>
-                    <span class="icon moon">🌙</span>
-                </span>
-            </label>
-        </div>
-    </nav>
+            // Se lo scroll è arrivato alla sezione (con 250px di anticipo per attivazione fluida)
+            if (scrollPosition >= (sectionTop - 250) && scrollPosition < (sectionTop + sectionHeight)) {
+                currentId = section.getAttribute('id');
+            }
+        });
 
-    <header class="hero">
-        <model-viewer 
-            src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" 
-            auto-rotate 
-            camera-controls 
-            disable-zoom 
-            shadow-intensity="1" 
-            class="hero-3d-model">
-        </model-viewer>
-
-        <div class="hero-text glass-panel animate-block" data-animation="fadeUp">
-            <h1><span class="gradient-text">AUTOSTOKER</span></h1>
-            <p class="subtitle">Il prototipo di robot mobile intelligente per l'automazione industriale sostenibile.</p>
-            <p class="school">Un progetto del team dell'IIS Torricelli di Milano.</p>
-        </div>
-
-        <a href="modello.html" class="minimal-3d-link animate-block" data-animation="fadeUp">
-            Esplora il modello 3D completo <span>→</span>
-        </a>
-    </header>
-
-    <section id="visione" class="section text-center animate-block" data-animation="fadeUp">
-        <div class="container">
-            <h2 class="gradient-text">Visione del Progetto</h2>
-            <p class="lead">AUTOSTOKER è stato concepito come soluzione sperimentale per ambienti produttivi e logistici, capace di supportare attività operative quali movimentazione oggetti, assistenza ai processi e monitoraggio ambientale.</p>
-            <p>L'intero sistema nasce con l'obiettivo di dimostrare concretamente come robotica, efficienza energetica e integrazione software-hardware possano convergere in una piattaforma tecnologica modulare e scalabile, seguendo un approccio ingegneristico multidisciplinare.</p>
-        </div>
-    </section>
-
-    <section id="architettura" class="section bg-alt">
-        <div class="container grid-2">
-            <div class="text-content animate-block" data-animation="slideRight">
-                <h2 class="gradient-text">Architettura Meccanica e Strutturale</h2>
-                <p>Dal punto di vista strutturale, il robot adotta un'architettura innovativa basata su due arti mobili indipendenti (gambe). Questa soluzione è stata scelta per ottimizzare la distribuzione delle masse e la stabilità dinamica.</p>
-                <ul class="stagger-box">
-                    <li><strong>Il Corpo Centrale:</strong> Costituisce il busto strutturale portante, rigidamente integrato con il telaio principale. Al suo interno sono alloggiati i moduli elettronici, sensoriali ed energetici, configurati per garantire la massima protezione dei componenti e un bilanciamento dei pesi ottimale.</li>
-                    <li><strong>Sistema di Manipolazione:</strong> Per le operazioni di presa, AUTOSTOKER utilizza un meccanismo costituito da due bracci lineari contrapposti. Questa soluzione garantisce una forza uniforme sull'oggetto, robustezza strutturale ed efficienza energetica superiore rispetto a sistemi articolati complessi.</li>
-                </ul>
-            </div>
-            <div class="image-content animate-block" data-animation="slideLeft">
-                <img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&q=80&w=800" alt="Struttura meccanica">
-            </div>
-        </div>
-    </section>
-
-    <section id="locomozione" class="section text-center">
-        <div class="container animate-block" data-animation="fadeUp">
-            <h2 class="gradient-text">Sistema di Locomozione Avanzato</h2>
-            <p class="lead">Il sistema di movimento è il cuore tecnologico del prototipo.</p>
-            <p>Ogni "piede" del robot integra un set di due ruote con funzioni sdoppiate:</p>
-            
-            <div class="cards-grid stagger-box">
-                
-                <div class="flip-card locomotion-flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h3>Ruota Anteriore (Sterzo)</h3>
-                            <p class="team-role">Controllo Direzionale</p>
-                        </div>
-                        <div class="flip-card-back locomotion-back-content">
-                            <p>Dedicata esclusivamente alla direzione. Essendo priva di trazione, permette una precisione millimetrica nelle manovre e riduce drasticamente gli attriti durante i cambi di traiettoria.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card locomotion-flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h3>Ruota Posteriore (Trazione)</h3>
-                            <p class="team-role">Forza Motrice</p>
-                        </div>
-                        <div class="flip-card-back locomotion-back-content">
-                            <p>Dedicata esclusivamente alla spinta e alla forza motrice. Questa configurazione ibrida permette un controllo dinamico superiore, evitando slittamenti e ottimizzando il consumo energetico durante lo spostamento di carichi pesanti.</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="sostenibilita" class="section bg-alt">
-        <div class="container grid-2 reverse">
-            <div class="text-content animate-block" data-animation="slideLeft">
-                <h2 class="gradient-text">Sostenibilità e Industria 5.0</h2>
-                <p>Particolare attenzione è stata dedicata all'impatto ambientale e all'efficienza:</p>
-                <ul class="stagger-box">
-                    <li><strong>Materiali:</strong> La struttura e i componenti meccanici sono progettati per la manifattura additiva (stampa 3D) utilizzando materiali plastici riciclati.</li>
-                    <li><strong>Gestione Energetica:</strong> Il sistema integra batterie ricaricabili supportate da moduli solari e un dispositivo di recupero dell'energia cinetica (KERS) durante le fasi di decelerazione, riducendo gli sprechi energetici nel ciclo operativo.</li>
-                </ul>
-            </div>
-            <div class="image-content animate-block" data-animation="slideRight">
-                <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&q=80&w=800" alt="Sostenibilità">
-            </div>
-        </div>
-    </section>
-
-    <section id="software" class="section text-center">
-        <div class="container animate-block" data-animation="fadeUp">
-            <h2 class="gradient-text">Architettura Software e Controllo</h2>
-            [cite_start]<p class="lead">L'intelligenza del robot gestisce in modo coordinato locomozione e sensoristica attraverso tre modalità operative: [cite: 25]</p>
-            
-            <div class="cards-grid three-cols stagger-box">
-                
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h3>1. Controllo Remoto</h3>
-                            <p>Wireless</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=400" alt="Controllo Remoto">
-                            <div class="back-content">
-                                [cite_start]<p>Per manovre manuali d'emergenza o precisione. [cite: 26]</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h3>2. Modalità Automatica</h3>
-                            <p>Algoritmi Intelligenti</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=400" alt="Navigazione Autonoma">
-                            <div class="back-content">
-                                [cite_start]<p>Basata su algoritmi intelligenti per la navigazione autonoma. [cite: 26, 27]</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h3>3. Piattaforma Web</h3>
-                            <p>Monitoraggio Gestionale</p>
-                        </div>
-                        <div class="flip-card-back">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400" alt="Piattaforma Web">
-                            <div class="back-content">
-                                [cite_start]<p>Per il monitoraggio costante, la configurazione dei parametri e la sicurezza operativa contro comandi non autorizzati. [cite: 28]</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="team" class="section bg-alt text-center animate-block" data-animation="fadeUp">
-        <div class="container">
-            <h2 class="gradient-text">Ruoli del Team di Sviluppo</h2>
-            <div class="team-grid stagger-box">
-                
-                <div class="flip-card team-flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <img src="AtienzaPFP_2.png" alt="Daniele Atienza" class="team-photo">
-                            <h3>Daniele Atienza</h3>
-                            <p class="team-role">Progettazione hardware e struttura meccanica.</p>
-                        </div>
-                        <div class="flip-card-back team-back-content">
-                            <p class="team-bio">Appassionato di design 3D e robotica, si occupa di trasformare le idee in componenti fisici solidi, ottimizzando le masse per la piattaforma AUTOSTOKER.</p>
-                            <div class="social-links">
-                                <a href="#" target="_blank" class="social-btn">GitHub</a>
-                                <a href="#" target="_blank" class="social-btn">LinkedIn</a>
-                                <a href="mailto:daniele@example.com" class="social-btn">Email</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flip-card team-flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <img src="PratiPFP_2.png" alt="Manuel Prati" class="team-photo">
-                            <h3>Manuel Prati</h3>
-                            <p class="team-role">Sviluppo software e sistemi di controllo.</p>
-                        </div>
-                        <div class="flip-card-back team-back-content">
-                            <p class="team-bio">Mente logica del gruppo, programma gli applicativi per il controllo del robot. Inoltre programma il gestionale e il sito web, curando il lato comunicativo del progetto.</p>
-                            <div class="social-links">
-                                <a href="https://github.com/MPSup3r" target="_blank" class="social-btn">GitHub</a>
-                                <a href="https://it.linkedin.com/in/manuel-prati-3585613b2" target="_blank" class="social-btn">LinkedIn</a>
-                                <a href="mailto:manuelprati08@gmail.com" class="social-btn">Email</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flip-card team-flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <img src="EbraicoPFP.png" alt="Lorenzo Ebraico" class="team-photo">
-                            <h3>Lorenzo Ebraico</h3>
-                            <p class="team-role">Programmazione hardware e integrazione elettronica.</p>
-                        </div>
-                        <div class="flip-card-back team-back-content">
-                            <p class="team-bio">Specialista dei circuiti, fa da ponte vitale tra la meccanica del robot e il codice, curando la complessa sensoristica e la gestione energetica.</p>
-                            <div class="social-links">
-                                <a href="#" target="_blank" class="social-btn">GitHub</a>
-                                <a href="#" target="_blank" class="social-btn">LinkedIn</a>
-                                <a href="mailto:lorenzo@example.com" class="social-btn">Email</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-    </section>
-    <script src="script.js"></script>
-</body>
-<footer class="site-footer">
-        <div class="container">
-            <p>via U. Dini, 7 - 20142 - 201xx Milano (MI)</p>
-            <p>Tel 02/89511344 - Mail: <a href="mailto:miis101008@istruzione.it">miis101008@istruzione.it</a> - PEC: <a href="mailto:miis101008@pec.istruzione.it">miis101008@pec.istruzione.it</a></p>
-            <p>Codice meccanografico: MIIS101008 - C.F. 97324880158</p>
-        </div>
-    </footer>
-</html>
+        // Applica la classe 'active' solo al link corretto
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (currentId && link.getAttribute('href') === `#${currentId}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+});
