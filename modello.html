@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modello 3D | AUTOSTOKER</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">AUTOSTOKER</a>
+            <ul class="nav-links">
+                <li><a href="index.html#visione">Visione</a></li>
+                <li><a href="index.html#architettura">Architettura</a></li>
+                <li><a href="index.html#locomozione">Locomozione</a></li>
+                <li><a href="index.html#sostenibilita">Sostenibilità</a></li>
+                <li><a href="index.html#software">Software</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="modello.html" style="color: var(--text-primary); font-weight: 700;">Modello 3D</a></li>
+                <li><a href="galleria.html">Galleria</a></li>
+            </ul>
+            <label class="theme-switch" aria-label="Cambia Tema">
+                <input type="checkbox" id="theme-checkbox">
+                <span class="slider round">
+                    <span class="icon sun">☀️</span>
+                    <span class="icon moon">🌙</span>
+                </span>
+            </label>
+        </div>
+    </nav>
+
+    <section class="section text-center" style="padding-top: 150px;">
+        <div class="container animate-block" data-animation="fadeUp">
+            <h1 class="gradient-text">Esplora il Modello 3D</h1>
+            <p class="lead">Interagisci con il prototipo AUTOSTOKER a 360 gradi.</p>
+            
+            <div class="model-container">
+                <model-viewer 
+                    id="robot-viewer"
+                    src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" 
+                    auto-rotate 
+                    camera-controls 
+                    shadow-intensity="1">
+                    
+                    <div class="custom-controls">
+                        <button id="zoom-out" class="control-btn" aria-label="Zoom Out">-</button>
+                        <button id="zoom-in" class="control-btn" aria-label="Zoom In">+</button>
+                    </div>
+                </model-viewer>
+            </div>
+            <p class="model-hint">🖱️ <strong>Trascina</strong> per ruotare &nbsp;|&nbsp; 🔍 Usa i <strong>bottoni</strong> o la <strong>rotellina</strong> per lo zoom</p>
+            
+            <div style="margin-top: 40px;">
+                <a href="index.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">&larr; Torna alla pagina principale</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>via U. Dini, 7 - 20142 - 201xx Milano (MI)</p>
+            <p>Tel 02/89511344 - Mail: <a href="mailto:miis101008@istruzione.it">miis101008@istruzione.it</a> - PEC: <a href="mailto:miis101008@pec.istruzione.it">miis101008@pec.istruzione.it</a></p>
+            <p>Codice meccanografico: MIIS101008 - C.F. 97324880158</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
