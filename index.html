@@ -1,592 +1,262 @@
-/* --- Variabili CSS --- */
-:root {
-    --bg-color: #fbfbfd;
-    --bg-alt: #f2f2f7;
-    --text-primary: #1d1d1f;
-    --text-secondary: #86868b;
-    --nav-bg: rgba(251, 251, 253, 0.7);
-    --nav-border: rgba(0, 0, 0, 0.1);
-    --card-bg: rgba(255, 255, 255, 0.6);
-    --card-border: rgba(255, 255, 255, 0.4);
-    --glass-panel-bg: rgba(251, 251, 253, 0.65);
-    
-    --heading-gradient: linear-gradient(135deg, #1d1d1f 0%, #434344 100%);
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-[data-theme="dark"] {
-    --bg-color: #000000;
-    --bg-alt: #111111;
-    --text-primary: #f5f5f7;
-    --text-secondary: #a1a1a6;
-    --nav-bg: rgba(20, 20, 20, 0.7);
-    --nav-border: rgba(255, 255, 255, 0.1);
-    --card-bg: rgba(30, 30, 32, 0.6);
-    --card-border: rgba(255, 255, 255, 0.1);
-    --glass-panel-bg: rgba(0, 0, 0, 0.65);
-
-    --heading-gradient: linear-gradient(135deg, #ffffff 0%, #a1a1a6 100%);
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-    --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    line-height: 1.6;
-    transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.5s ease;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-}
-
-/* --- Navigazione (SMART NAVBAR AGGIUNTA) --- */
-nav {
-    position: fixed; top: 0; width: 100%;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid var(--nav-border);
-    z-index: 1000;
-    /* La transizione "transform" permette lo scorrimento fluido */
-    transition: background-color 0.5s ease, border-color 0.5s ease, transform 0.3s ease-in-out;
-}
-
-/* Modifica visiva per il link attivo nella navbar */
-nav a.active {
-    color: #ff9800 !important; /* Colore arancione del tema, puoi cambiarlo */
-    font-weight: bold;
-    border-bottom: 2px solid #ff9800; 
-    transition: all 0.3s ease;
-}
-
-.nav-hidden {
-    transform: translateY(-100%); /* Nasconde la barra verso l'alto */
-}
-
-.nav-content {
-    display: flex; justify-content: space-between; align-items: center;
-    max-width: 1200px; margin: 0 auto; padding: 15px 25px;
-}
-
-.logo { 
-    font-weight: 700; font-size: 1.3rem; letter-spacing: 0.5px; 
-    text-decoration: none; color: var(--text-primary); cursor: pointer; 
-}
-
-.nav-links { display: flex; list-style: none; gap: 30px; }
-.nav-links a {
-    text-decoration: none; color: var(--text-secondary);
-    font-size: 0.95rem; font-weight: 500;
-    transition: color 0.3s ease, transform 0.3s ease;
-    display: inline-block;
-}
-.nav-links a:hover { color: var(--text-primary); transform: translateY(-2px); }
-
-/* --- Switch Tema (Sole/Luna) --- */
-.theme-switch {
-    position: relative; display: inline-block;
-    width: 64px; height: 32px;
-}
-.theme-switch input { opacity: 0; width: 0; height: 0; }
-
-.slider {
-    position: absolute; cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--nav-border); 
-    border: 1px solid var(--card-border);
-    transition: .4s; border-radius: 34px;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 6px; box-sizing: border-box;
-}
-
-.slider:before {
-    position: absolute; content: "";
-    height: 24px; width: 24px; left: 3px; bottom: 3px;
-    background-color: white;
-    transition: .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    border-radius: 50%; z-index: 2;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-[data-theme="dark"] .slider:before { background-color: #2c2c2e; }
-input:checked + .slider:before { transform: translateX(32px); }
-.icon { font-size: 14px; z-index: 1; user-select: none; }
-
-/* --- Tipografia --- */
-h1, h2 { letter-spacing: -0.03em; font-weight: 700; }
-.gradient-text {
-    background: var(--heading-gradient);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; display: inline-block;
-}
-.lead { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 25px; font-weight: 500; }
-p, li { font-size: 1.15rem; margin-bottom: 18px; color: var(--text-secondary); }
-li { color: var(--text-primary); }
-ul { margin-left: 25px; margin-top: 25px; }
-
-/* --- Layout Base --- */
-.container { max-width: 1080px; margin: 0 auto; padding: 0 25px;}
-.section { padding: 120px 0; }
-.text-center { text-align: center; }
-.bg-alt { background-color: var(--bg-alt); }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-.grid-2.reverse .text-content { order: 2; }
-.image-content img { width: 100%; border-radius: 24px; box-shadow: var(--shadow-sm); transition: transform 0.5s ease, box-shadow 0.5s ease; }
-.image-content img:hover { transform: scale(1.02); box-shadow: var(--shadow-hover); }
-
-/* --- Hero Section & 3D Model --- */
-.hero {
-    position: relative; 
-    padding-top: 140px; padding-bottom: 80px;
-    text-align: center; min-height: 90vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    overflow: hidden;
-}
-
-.hero-3d-model {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; outline: none;
-}
-
-.hero-text {
-    z-index: 1; padding: 40px 60px; border-radius: 30px;
-    background: var(--glass-panel-bg);
-    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-    border: 1px solid var(--card-border);
-    box-shadow: var(--shadow-hover);
-}
-
-.hero h1 { font-size: 5.5rem; margin-bottom: 15px; line-height: 1.1; }
-.hero .subtitle { font-size: 1.7rem; max-width: 700px; margin: 0 auto 15px; }
-.hero .school { font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0; }
-
-/* --- Cards Standard --- */
-.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; margin-top: 60px; }
-.cards-grid.three-cols { grid-template-columns: repeat(3, 1fr); }
-
-.card {
-    background-color: var(--card-bg);
-    backdrop-filter: blur(20px) saturate(120%); -webkit-backdrop-filter: blur(20px) saturate(120%);
-    border: 1px solid var(--card-border); padding: 45px; border-radius: 24px;
-    box-shadow: var(--shadow-sm); transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.card h3 { margin-bottom: 15px; font-size: 1.6rem; color: var(--text-primary); }
-.card p { color: var(--text-secondary); margin-bottom: 0; }
-.hover-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: var(--shadow-hover); background-color: var(--bg-color); }
-
-/* =========================================
-   EFFETTO 3D FLIP CARDS (Sezione Software)
-   ========================================= */
-.flip-card {
-    background-color: transparent;
-    perspective: 1000px; /* Determina la profondità del 3D */
-    height: 380px; /* Altezza fissa per gestire la rotazione */
-}
-
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform-style: preserve-3d; /* Mantiene gli elementi figli nello spazio 3D */
-}
-
-/* Quando il mouse passa sopra, ruota di 180 gradi */
-.flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-/* Base condivisa tra Fronte e Retro per l'effetto Vetro (Glassmorphism) */
-.flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden; /* Nasconde il retro su Safari */
-    backface-visibility: hidden;         /* Nasconde il retro sugli altri browser */
-    border-radius: 24px;
-    
-    /* Stili ereditati dalle card standard per mantenere il design */
-    background-color: var(--card-bg);
-    backdrop-filter: blur(20px) saturate(120%);
-    -webkit-backdrop-filter: blur(20px) saturate(120%);
-    border: 1px solid var(--card-border);
-    box-shadow: var(--shadow-sm);
-    
-    display: flex;
-    flex-direction: column;
-}
-
-/* Personalizzazione del Fronte */
-.flip-card-front {
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-}
-
-.flip-card-front h3 { margin-bottom: 10px; font-size: 1.6rem; color: var(--text-primary); }
-.flip-card-front p { color: var(--text-secondary); margin-bottom: 0; font-weight: 500;}
-
-/* Personalizzazione del Retro */
-.flip-card-back {
-    transform: rotateY(180deg); /* Questo elemento parte già girato */
-    justify-content: flex-start;
-    overflow: hidden; /* Fondamentale per far tagliare l'immagine in alto nei bordi curvi */
-}
-
-.flip-card-back img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-}
-
-.back-content {
-    padding: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1; /* Occupa lo spazio rimanente sotto l'immagine */
-}
-
-.back-content p {
-    font-size: 1rem;
-    color: var(--text-primary);
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* --- Sezione Team (Testi Invertiti) --- */
-.team-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px;
-}
-
-.team-member {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 40px 25px; text-align: center;
-}
-
-.team-photo {
-    width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
-    margin-bottom: 20px; 
-    border: 4px solid #0066cc; /* Bordo blu chiaro */
-    box-shadow: var(--shadow-sm);
-    transition: border-color 0.3s ease;
-}
-[data-theme="dark"] .team-photo { border-color: #2997ff; } /* Bordo blu elettrico in dark mode */
-
-.team-member h3 { font-size: 1.5rem; margin-bottom: 5px; color: var(--text-primary); }
-
-/* Ruolo più piccolo e in grassetto */
-.team-role { 
-    font-size: 0.8rem; 
-    font-weight: 700; 
-    color: #0066cc; 
-    margin-bottom: 10px; 
-    text-transform: uppercase; 
-    letter-spacing: 0.8px;
-}
-[data-theme="dark"] .team-role { color: #2997ff; }
-
-/* Descrizione più grande e leggibile */
-.team-bio { 
-    font-size: 1rem; 
-    color: var(--text-secondary); 
-    line-height: 1.5; 
-}
-.outro-text { margin-top: 70px; font-size: 1em; opacity: 0.8; max-width: 800px; margin-left: auto; margin-right: auto;}
-
-
-/* =========================================
-   ANIMAZIONI CSS FIXATE E BLINDATE
-   ========================================= */
-.animate-block, .stagger-box > * { 
-    opacity: 0; 
-    transform: translateY(40px); 
-    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
-}
-
-[data-animation="fadeUp"] { transform: translateY(40px); }
-[data-animation="slideRight"] { transform: translateX(-50px); }
-[data-animation="slideLeft"] { transform: translateX(50px); }
-
-.animate-block.is-visible,
-.stagger-box.is-visible > * { 
-    opacity: 1 !important; 
-    transform: translate(0) scale(1) !important; 
-}
-
-.stagger-box.is-visible > *:nth-child(1) { transition-delay: 0.1s; }
-.stagger-box.is-visible > *:nth-child(2) { transition-delay: 0.2s; }
-.stagger-box.is-visible > *:nth-child(3) { transition-delay: 0.3s; }
-
-/* =========================================
-   PAGINE EXTRA: GALLERIA E MODELLO 3D
-   ========================================= */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 24px;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
-}
-
-.gallery-item img:hover {
-    transform: scale(1.03);
-    box-shadow: var(--shadow-hover);
-}
-
-.model-container {
-    width: 100%;
-    height: 70vh;
-    margin-top: 40px;
-    border-radius: 30px;
-    overflow: hidden;
-    background: var(--glass-panel-bg);
-    border: 1px solid var(--card-border);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-}
-
-.model-container model-viewer {
-    width: 100%;
-    height: 100%;
-    outline: none;
-}
-
-/* --- Mobile --- */
-@media (max-width: 768px) {
-    .nav-links { display: none; }
-    .hero-text { padding: 30px 20px; width: 90%; }
-    .hero h1 { font-size: 3.5rem; }
-    .hero .subtitle { font-size: 1.3rem; }
-    .grid-2 { grid-template-columns: 1fr; gap: 40px; }
-    .grid-2.reverse .text-content { order: 1; }
-    .cards-grid, .cards-grid.three-cols, .team-grid { grid-template-columns: 1fr; }
-    .section { padding: 80px 0; }
-    [data-animation="slideRight"], [data-animation="slideLeft"] { transform: translateY(30px); }
-}
-
-/* =========================================
-   CONTROLLI MODELLO 3D
-   ========================================= */
-.custom-controls {
-    position: absolute; bottom: 25px; right: 25px;
-    display: flex; gap: 15px; z-index: 10;
-}
-.control-btn {
-    background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0,0,0,0.1); color: #1d1d1f;
-    border-radius: 50%; width: 50px; height: 50px; font-size: 26px; font-weight: bold;
-    cursor: pointer; backdrop-filter: blur(10px); box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: all 0.2s ease; display: flex; align-items: center; justify-content: center;
-}
-.control-btn:hover { background: #1d1d1f; color: #fff; transform: scale(1.1); }
-.model-hint { font-size: 0.9rem; color: var(--text-secondary); margin-top: 15px; opacity: 0.8; }
-[data-theme="dark"] .control-btn { background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; }
-[data-theme="dark"] .control-btn:hover { background: #fff; color: #000; }
-
-/* =========================================
-   LIGHTBOX GALLERIA (FIX DEFINITIVO)
-   ========================================= */
-.gallery-item img { cursor: zoom-in; }
-
-.lightbox {
-    opacity: 0; visibility: hidden;
-    position: fixed; z-index: 2000; left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-    display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.lightbox.active { opacity: 1; visibility: visible; }
-
-.lightbox-content {
-    max-width: 90%; max-height: 85vh;
-    border-radius: 12px; box-shadow: 0 0 40px rgba(0,0,0,0.5);
-    object-fit: contain; transform: scale(0.9); transition: transform 0.3s ease;
-}
-.lightbox.active .lightbox-content { transform: scale(1); }
-
-.close-lightbox {
-    position: absolute; top: 20px; right: 40px;
-    color: #fff; font-size: 50px; font-weight: 300; cursor: pointer;
-    transition: 0.3s; z-index: 2001; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-.close-lightbox:hover { color: #aaa; }
-
-.lightbox-prev, .lightbox-next {
-    cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
-    width: auto; padding: 20px; color: white; font-weight: bold; font-size: 40px;
-    transition: 0.3s; user-select: none; border-radius: 10px; z-index: 2001; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-.lightbox-next { right: 30px; } .lightbox-prev { left: 30px; }
-.lightbox-prev:hover, .lightbox-next:hover { background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); }
-
-@media (max-width: 768px) {
-    .lightbox-prev, .lightbox-next { padding: 10px; font-size: 30px; }
-    .lightbox-next { right: 10px; } .lightbox-prev { left: 10px; }
-    .close-lightbox { top: 10px; right: 20px; font-size: 40px; }
-}
-
-/* =========================================
-   FOOTER (Piè di pagina istituzionale)
-   ========================================= */
-.site-footer {
-    background-color: var(--bg-alt);
-    border-top: 1px solid var(--card-border);
-    padding: 50px 20px;
-    text-align: center;
-    margin-top: 80px;
-}
-
-.site-footer p {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-
-.site-footer a {
-    color: #0066cc;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-[data-theme="dark"] .site-footer a {
-    color: #2997ff;
-}
-
-.site-footer a:hover {
-    text-decoration: underline;
-}
-
-/* =========================================
-   FLIP CARD TEAM E BOTTONI SOCIAL
-   ========================================= */
-.team-flip-card {
-    height: 420px; /* Leggermente più alta per far stare bene foto e testi */
-}
-
-.team-back-content {
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.social-links {
-    display: flex;
-    gap: 10px;
-    margin-top: 25px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.social-btn {
-    padding: 8px 16px;
-    border-radius: 20px;
-    background: rgba(0, 102, 204, 0.1);
-    color: #0066cc;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    border: 1px solid rgba(0, 102, 204, 0.3);
-    transition: all 0.2s ease;
-}
-
-.social-btn:hover {
-    background: #0066cc;
-    color: white;
-    transform: translateY(-2px);
-}
-
-[data-theme="dark"] .social-btn {
-    background: rgba(41, 151, 255, 0.1);
-    color: #2997ff;
-    border-color: rgba(41, 151, 255, 0.3);
-}
-
-[data-theme="dark"] .social-btn:hover {
-    background: #2997ff;
-    color: white;
-}
-
-/* =========================================
-   FLIP CARD LOCOMOZIONE
-   ========================================= */
-.locomotion-flip-card {
-    height: 320px; /* Altezza ottimizzata per il testo */
-}
-
-.locomotion-back-content {
-    padding: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.locomotion-back-content p {
-    font-size: 1.05rem;
-    color: var(--text-primary);
-    line-height: 1.6;
-    margin: 0;
-}
-/* --- Link Minimal Modello 3D (Home) --- */
-/* --- Link Minimal Modello 3D (Home) --- */
-.minimal-3d-link {
-    position: absolute; 
-    bottom: 15px; 
-    z-index: 10; 
-    font-size: 0.95rem;
-    font-weight: 600; 
-    color: #007aff !important; /* FORZATURA BLU ACCESO */
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
-}
-
-.minimal-3d-link span {
-    transition: transform 0.3s ease;
-    font-size: 1.1rem;
-}
-
-/* Effetti Hover */
-.minimal-3d-link:hover {
-    opacity: 0.7; 
-}
-
-.logo-img {
-    height: 45px; /* Regola l'altezza desiderata */
-    width: auto;
-    transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    display: block;
-}
-
-/* Quando il tema è dark, invertiamo i colori dell'immagine */
-[data-theme="dark"] .logo-img {
-    filter: invert(1) brightness(2); 
-    /* invert(1) lo rende bianco, brightness(2) assicura che sia bello brillante */
-}
-
-.minimal-3d-link:hover span {
-    transform: translateX(4px); 
-}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOSTOKER | IIS Torricelli</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-content">
+            
+            <a href="#" class="logo">
+                <img src="logo_full_black.png" alt="AUTOSTOKER" class="logo-img">
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#visione">Visione</a></li>
+                <li><a href="#architettura">Architettura</a></li>
+                <li><a href="#locomozione">Locomozione</a></li>
+                <li><a href="#sostenibilita">Sostenibilità</a></li>
+                <li><a href="#software">Software</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="modello.html">Modello 3D</a></li>
+                <li><a href="galleria.html">Galleria</a></li>
+            </ul>
+            
+            <label class="theme-switch" aria-label="Cambia Tema">
+                <input type="checkbox" id="theme-checkbox">
+                <span class="slider round">
+                    <span class="icon sun">☀️</span>
+                    <span class="icon moon">🌙</span>
+                </span>
+            </label>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <model-viewer 
+            src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" 
+            auto-rotate 
+            camera-controls 
+            disable-zoom 
+            shadow-intensity="1" 
+            class="hero-3d-model">
+        </model-viewer>
+
+        <div class="hero-text glass-panel animate-block" data-animation="fadeUp">
+            <h1><span class="gradient-text">AUTOSTOKER</span></h1>
+            <p class="subtitle">Il prototipo di robot mobile intelligente per l'automazione industriale sostenibile.</p>
+            <p class="school">Un progetto del team dell'IIS Torricelli di Milano.</p>
+        </div>
+
+        <a href="modello.html" class="minimal-3d-link animate-block" data-animation="fadeUp">
+            Esplora il modello 3D completo <span>→</span>
+        </a>
+    </header>
+
+    <section id="visione" class="section text-center animate-block" data-animation="fadeUp">
+        <div class="container">
+            <h2 class="gradient-text">Visione del Progetto</h2>
+            <p class="lead">AUTOSTOKER è stato concepito come soluzione sperimentale per ambienti produttivi e logistici, capace di supportare attività operative quali movimentazione oggetti, assistenza ai processi e monitoraggio ambientale.</p>
+            <p>L'intero sistema nasce con l'obiettivo di dimostrare concretamente come robotica, efficienza energetica e integrazione software-hardware possano convergere in una piattaforma tecnologica modulare e scalabile, seguendo un approccio ingegneristico multidisciplinare.</p>
+        </div>
+    </section>
+
+    <section id="architettura" class="section bg-alt">
+        <div class="container grid-2">
+            <div class="text-content animate-block" data-animation="slideRight">
+                <h2 class="gradient-text">Architettura Meccanica e Strutturale</h2>
+                <p>Dal punto di vista strutturale, il robot adotta un'architettura innovativa basata su due arti mobili indipendenti (gambe). Questa soluzione è stata scelta per ottimizzare la distribuzione delle masse e la stabilità dinamica.</p>
+                <ul class="stagger-box">
+                    <li><strong>Il Corpo Centrale:</strong> Costituisce il busto strutturale portante, rigidamente integrato con il telaio principale. Al suo interno sono alloggiati i moduli elettronici, sensoriali ed energetici, configurati per garantire la massima protezione dei componenti e un bilanciamento dei pesi ottimale.</li>
+                    <li><strong>Sistema di Manipolazione:</strong> Per le operazioni di presa, AUTOSTOKER utilizza un meccanismo costituito da due bracci lineari contrapposti. Questa soluzione garantisce una forza uniforme sull'oggetto, robustezza strutturale ed efficienza energetica superiore rispetto a sistemi articolati complessi.</li>
+                </ul>
+            </div>
+            <div class="image-content animate-block" data-animation="slideLeft">
+                <img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&q=80&w=800" alt="Struttura meccanica">
+            </div>
+        </div>
+    </section>
+
+    <section id="locomozione" class="section text-center">
+        <div class="container animate-block" data-animation="fadeUp">
+            <h2 class="gradient-text">Sistema di Locomozione Avanzato</h2>
+            <p class="lead">Il sistema di movimento è il cuore tecnologico del prototipo.</p>
+            <p>Ogni "piede" del robot integra un set di due ruote con funzioni sdoppiate:</p>
+            
+            <div class="cards-grid stagger-box">
+                
+                <div class="flip-card locomotion-flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Ruota Anteriore (Sterzo)</h3>
+                            <p class="team-role">Controllo Direzionale</p>
+                        </div>
+                        <div class="flip-card-back locomotion-back-content">
+                            <p>Dedicata esclusivamente alla direzione. Essendo priva di trazione, permette una precisione millimetrica nelle manovre e riduce drasticamente gli attriti durante i cambi di traiettoria.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card locomotion-flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Ruota Posteriore (Trazione)</h3>
+                            <p class="team-role">Forza Motrice</p>
+                        </div>
+                        <div class="flip-card-back locomotion-back-content">
+                            <p>Dedicata esclusivamente alla spinta e alla forza motrice. Questa configurazione ibrida permette un controllo dinamico superiore, evitando slittamenti e ottimizzando il consumo energetico durante lo spostamento di carichi pesanti.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="sostenibilita" class="section bg-alt">
+        <div class="container grid-2 reverse">
+            <div class="text-content animate-block" data-animation="slideLeft">
+                <h2 class="gradient-text">Sostenibilità e Industria 5.0</h2>
+                <p>Particolare attenzione è stata dedicata all'impatto ambientale e all'efficienza:</p>
+                <ul class="stagger-box">
+                    <li><strong>Materiali:</strong> La struttura e i componenti meccanici sono progettati per la manifattura additiva (stampa 3D) utilizzando materiali plastici riciclati.</li>
+                    <li><strong>Gestione Energetica:</strong> Il sistema integra batterie ricaricabili supportate da moduli solari e un dispositivo di recupero dell'energia cinetica (KERS) durante le fasi di decelerazione, riducendo gli sprechi energetici nel ciclo operativo.</li>
+                </ul>
+            </div>
+            <div class="image-content animate-block" data-animation="slideRight">
+                <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&q=80&w=800" alt="Sostenibilità">
+            </div>
+        </div>
+    </section>
+
+    <section id="software" class="section text-center">
+        <div class="container animate-block" data-animation="fadeUp">
+            <h2 class="gradient-text">Architettura Software e Controllo</h2>
+            [cite_start]<p class="lead">L'intelligenza del robot gestisce in modo coordinato locomozione e sensoristica attraverso tre modalità operative: [cite: 25]</p>
+            
+            <div class="cards-grid three-cols stagger-box">
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>1. Controllo Remoto</h3>
+                            <p>Wireless</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=400" alt="Controllo Remoto">
+                            <div class="back-content">
+                                [cite_start]<p>Per manovre manuali d'emergenza o precisione. [cite: 26]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>2. Modalità Automatica</h3>
+                            <p>Algoritmi Intelligenti</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=400" alt="Navigazione Autonoma">
+                            <div class="back-content">
+                                [cite_start]<p>Basata su algoritmi intelligenti per la navigazione autonoma. [cite: 26, 27]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>3. Piattaforma Web</h3>
+                            <p>Monitoraggio Gestionale</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400" alt="Piattaforma Web">
+                            <div class="back-content">
+                                [cite_start]<p>Per il monitoraggio costante, la configurazione dei parametri e la sicurezza operativa contro comandi non autorizzati. [cite: 28]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="section bg-alt text-center animate-block" data-animation="fadeUp">
+        <div class="container">
+            <h2 class="gradient-text">Ruoli del Team di Sviluppo</h2>
+            <div class="team-grid stagger-box">
+                
+                <div class="flip-card team-flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="AtienzaPFP_2.png" alt="Daniele Atienza" class="team-photo">
+                            <h3>Daniele Atienza</h3>
+                            <p class="team-role">Progettazione hardware e struttura meccanica.</p>
+                        </div>
+                        <div class="flip-card-back team-back-content">
+                            <p class="team-bio">Appassionato di design 3D e robotica, si occupa di trasformare le idee in componenti fisici solidi, ottimizzando le masse per la piattaforma AUTOSTOKER.</p>
+                            <div class="social-links">
+                                <a href="https://github.com/atienzadaniele4-arch" target="_blank" class="social-btn">GitHub</a>
+                                <a href="https://www.linkedin.com/in/daniele-atienza-a555843b2/" target="_blank" class="social-btn">LinkedIn</a>
+                                <a href="mailto:atienzadaniele4@gmail.com" class="social-btn">Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card team-flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="PratiPFP_2.png" alt="Manuel Prati" class="team-photo">
+                            <h3>Manuel Prati</h3>
+                            <p class="team-role">Sviluppo software e sistemi di controllo.</p>
+                        </div>
+                        <div class="flip-card-back team-back-content">
+                            <p class="team-bio">Mente logica del gruppo, programma gli applicativi per il controllo del robot. Inoltre programma il gestionale e il sito web, curando il lato comunicativo del progetto.</p>
+                            <div class="social-links">
+                                <a href="https://github.com/MPSup3r" target="_blank" class="social-btn">GitHub</a>
+                                <a href="https://it.linkedin.com/in/manuel-prati-3585613b2" target="_blank" class="social-btn">LinkedIn</a>
+                                <a href="mailto:manuelprati08@gmail.com" class="social-btn">Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card team-flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="EbraicoPFP_2.png" alt="Lorenzo Ebraico" class="team-photo">
+                            <h3>Lorenzo Ebraico</h3>
+                            <p class="team-role">Programmazione hardware e integrazione elettronica.</p>
+                        </div>
+                        <div class="flip-card-back team-back-content">
+                            <p class="team-bio">Specialista dei circuiti, fa da ponte vitale tra la meccanica del robot e il codice, curando la complessa sensoristica e la gestione energetica.</p>
+                            <div class="social-links">
+                                <a href="https://github.com/CosmoUniverso" target="_blank" class="social-btn">GitHub</a>
+                                <a href="https://it.linkedin.com/in/lorenzo-ebraico-bb85933b2" target="_blank" class="social-btn">LinkedIn</a>
+                                <a href="mailto:lorenzo.ebraico@gmail.com" class="social-btn">Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+<footer class="site-footer">
+        <div class="container">
+            <p>via U. Dini, 7 - 20142 - 201xx Milano (MI)</p>
+            <p>Tel 02/89511344 - Mail: <a href="mailto:miis101008@istruzione.it">miis101008@istruzione.it</a> - PEC: <a href="mailto:miis101008@pec.istruzione.it">miis101008@pec.istruzione.it</a></p>
+            <p>Codice meccanografico: MIIS101008 - C.F. 97324880158</p>
+        </div>
+    </footer>
+</html>
