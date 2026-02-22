@@ -10,11 +10,11 @@
 <body>
     <nav id="navbar">
         <div class="nav-content">
-            
+
             <a href="#" class="logo">
                 <img src="logo_full_black.png" alt="AUTOSTOKER" class="logo-img">
             </a>
-            
+
             <ul class="nav-links">
                 <li><a href="#visione">Visione</a></li>
                 <li><a href="#architettura">Architettura</a></li>
@@ -25,7 +25,7 @@
                 <li><a href="modello.html">Modello 3D</a></li>
                 <li><a href="galleria.html">Galleria</a></li>
             </ul>
-            
+
             <label class="theme-switch" aria-label="Cambia Tema">
                 <input type="checkbox" id="theme-checkbox">
                 <span class="slider round">
@@ -36,18 +36,16 @@
         </div>
     </nav>
 
-   <model-viewer 
-    id="robot-viewer"
-    src="MechaVersion0_1.glb" 
-    auto-rotate 
-    camera-controls 
-    shadow-intensity="1">
-    
-    <div class="custom-controls">
-        <button id="zoom-out" class="control-btn" aria-label="Zoom Out">-</button>
-        <button id="zoom-in" class="control-btn" aria-label="Zoom In">+</button>
-    </div>
-</model-viewer>
+    <header class="hero">
+        <model-viewer 
+            src="MechaVersion0_1.glb" 
+            auto-rotate 
+            camera-controls 
+            disable-zoom 
+            shadow-intensity="1" 
+            class="hero-3d-model">
+        </model-viewer>
+
         <div class="hero-text glass-panel animate-block" data-animation="fadeUp">
             <h1><span class="gradient-text">AUTOSTOKER</span></h1>
             <p class="subtitle">Il prototipo di robot mobile intelligente per l'automazione industriale sostenibile.</p>
@@ -88,9 +86,9 @@
             <h2 class="gradient-text">Sistema di Locomozione Avanzato</h2>
             <p class="lead">Il sistema di movimento è il cuore tecnologico del prototipo.</p>
             <p>Ogni "piede" del robot integra un set di due ruote con funzioni sdoppiate:</p>
-            
+
             <div class="cards-grid stagger-box">
-                
+
                 <div class="flip-card locomotion-flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -139,9 +137,9 @@
         <div class="container animate-block" data-animation="fadeUp">
             <h2 class="gradient-text">Architettura Software e Controllo</h2>
             <p class="lead">L'intelligenza del robot gestisce in modo coordinato locomozione e sensoristica attraverso tre modalità operative:</p>
-            
+
             <div class="cards-grid three-cols stagger-box">
-                
+
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -195,7 +193,7 @@
         <div class="container">
             <h2 class="gradient-text">Ruoli del Team di Sviluppo</h2>
             <div class="team-grid stagger-box">
-                
+
                 <div class="flip-card team-flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -213,7 +211,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="flip-card team-flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -231,7 +229,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="flip-card team-flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
