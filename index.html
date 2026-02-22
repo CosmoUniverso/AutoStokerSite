@@ -36,18 +36,18 @@
         </div>
     </nav>
 
-    <model-viewer 
+   <model-viewer 
+    id="robot-viewer"
     src="MechaVersion0_1.glb" 
     auto-rotate 
     camera-controls 
-    disable-zoom 
-    shadow-intensity="1" 
-    class="hero-3d-model"
-    camera-orbit="0deg 75deg 180%" 
-    camera-target="0m 0.5m 0m"
-    min-camera-orbit="auto auto 180%">
+    shadow-intensity="1">
+    
+    <div class="custom-controls">
+        <button id="zoom-out" class="control-btn" aria-label="Zoom Out">-</button>
+        <button id="zoom-in" class="control-btn" aria-label="Zoom In">+</button>
+    </div>
 </model-viewer>
-
         <div class="hero-text glass-panel animate-block" data-animation="fadeUp">
             <h1><span class="gradient-text">AUTOSTOKER</span></h1>
             <p class="subtitle">Il prototipo di robot mobile intelligente per l'automazione industriale sostenibile.</p>
