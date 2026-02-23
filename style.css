@@ -388,8 +388,12 @@ ul { margin-left: 25px; margin-top: 25px; }
 .mobile-theme-item {
     display: none; /* Nasconde lo switch extra su PC */
 }
+/* Classe per bloccare lo scroll del sito quando il menù è aperto */
+body.no-scroll {
+    overflow: hidden;
+}
 
-/* --- SOSTITUISCI IL TUO BLOCCO MOBILE CON QUESTO --- */
+/* --- BLOCCO MOBILE --- */
 @media (max-width: 768px) {
     /* Nascondi lo switch tema desktop e mostra l'hamburger */
     #theme-switch-desktop { display: none; }
@@ -408,12 +412,12 @@ ul { margin-left: 25px; margin-top: 25px; }
     /* Trasforma i nav-links in un menu laterale a schermo intero */
     .nav-links { 
         position: fixed;
-        left: -100%; /* Nascosto fuori dallo schermo a sinistra */
+        left: -100%;
         top: 0;
-        flex-direction: column;
-        background-color: var(--nav-bg);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        /* Sfondo quasi solido per la modalità chiara */
+        background-color: rgba(251, 251, 253, 0.98); 
+        backdrop-filter: blur(30px) saturate(200%);
+        -webkit-backdrop-filter: blur(30px) saturate(200%);
         width: 100%;
         height: 100vh;
         text-align: center;
@@ -423,8 +427,16 @@ ul { margin-left: 25px; margin-top: 25px; }
         margin: 0;
         padding: 0;
         z-index: 1000;
-        display: flex !important; /* Sovrascrive il display:none originale */
+        display: flex !important;
+        flex-direction: column;
         gap: 25px;
+        /* Permette di scorrere dentro il menù se lo schermo è molto piccolo */
+        overflow-y: auto; 
+    }
+
+    /* Sfondo quasi solido per la modalità scura nel menù mobile */
+    [data-theme="dark"] .nav-links {
+        background-color: rgba(0, 0, 0, 0.98);
     }
 
     .nav-links.active {
