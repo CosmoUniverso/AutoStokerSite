@@ -366,9 +366,86 @@ ul { margin-left: 25px; margin-top: 25px; }
     outline: none;
 }
 
-/* --- Mobile --- */
+/* =========================================
+   HAMBURGER MENU & MOBILE NAV
+   ========================================= */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--text-primary);
+    border-radius: 3px;
+}
+
+.mobile-theme-item {
+    display: none; /* Nasconde lo switch extra su PC */
+}
+
+/* --- SOSTITUISCI IL TUO BLOCCO MOBILE CON QUESTO --- */
 @media (max-width: 768px) {
-    .nav-links { display: none; }
+    /* Nascondi lo switch tema desktop e mostra l'hamburger */
+    #theme-switch-desktop { display: none; }
+    
+    .hamburger { 
+        display: block; 
+        position: relative; 
+        z-index: 1002; /* Mantiene l'hamburger sopra il menu aperto */
+    }
+    
+    .logo {
+        position: relative;
+        z-index: 1002; /* Mantiene il logo cliccabile sopra il menu */
+    }
+
+    /* Trasforma i nav-links in un menu laterale a schermo intero */
+    .nav-links { 
+        position: fixed;
+        left: -100%; /* Nascosto fuori dallo schermo a sinistra */
+        top: 0;
+        flex-direction: column;
+        background-color: var(--nav-bg);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        z-index: 1000;
+        display: flex !important; /* Sovrascrive il display:none originale */
+        gap: 25px;
+    }
+
+    .nav-links.active {
+        left: 0; /* Fa scivolare il menu dentro lo schermo */
+    }
+
+    .nav-links a {
+        font-size: 1.5rem;
+    }
+
+    .mobile-theme-item {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    /* Animazione dell'Hamburger che diventa una "X" */
+    .hamburger.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* Il resto del tuo codice mobile originale intatto */
     .hero-text { padding: 30px 20px; width: 90%; }
     .hero h1 { font-size: 3.5rem; }
     .hero .subtitle { font-size: 1.3rem; }
