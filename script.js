@@ -36,11 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
     const navItems = document.querySelectorAll('.nav-links a');
+    const body = document.body; // Selezioniamo il body
 
     if (hamburger) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
+            // Blocca o sblocca lo scroll della pagina
+            body.classList.toggle('no-scroll'); 
         });
     }
 
@@ -50,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hamburger.classList.contains('active')) {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
+                // Sblocca lo scroll della pagina
+                body.classList.remove('no-scroll'); 
             }
         });
     });
