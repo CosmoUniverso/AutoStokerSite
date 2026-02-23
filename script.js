@@ -1,13 +1,15 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Gestione Tema (Switch Checkbox) ---
-    const themeCheckbox = document.getElementById('theme-checkbox');
+    // --- Gestione Tema (Sincronizzazione Desktop e Mobile) ---
+    const themeCheckbox = document.getElementById('theme-checkbox'); // PC
+    const themeCheckboxMobile = document.getElementById('theme-checkbox-mobile'); // Mobile
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
     function setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
+        // Aggiorna visivamente entrambi i bottoni
         if(themeCheckbox) themeCheckbox.checked = (theme === 'dark');
+        if(themeCheckboxMobile) themeCheckboxMobile.checked = (theme === 'dark');
     }
 
     const savedTheme = localStorage.getItem('theme');
@@ -17,16 +19,39 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(prefersDarkScheme.matches ? 'dark' : 'light');
     }
 
+    // Listener Desktop
     if(themeCheckbox) {
-        themeCheckbox.addEventListener('change', (e) => {
-            setTheme(e.target.checked ? 'dark' : 'light');
-        });
+        themeCheckbox.addEventListener('change', (e) => setTheme(e.target.checked ? 'dark' : 'light'));
+    }
+    // Listener Mobile
+    if(themeCheckboxMobile) {
+        themeCheckboxMobile.addEventListener('change', (e) => setTheme(e.target.checked ? 'dark' : 'light'));
     }
 
     prefersDarkScheme.addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            setTheme(e.matches ? 'dark' : 'light');
-        }
+        if (!localStorage.getItem('theme')) setTheme(e.matches ? 'dark' : 'light');
+    });
+
+    // --- Gestione Hamburger Menu Mobile ---
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const navItems = document.querySelectorAll('.nav-links a');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // Chiude il menu automaticamente quando l'utente clicca su una sezione
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (hamburger.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
     });
 
     // --- Smart Navbar (Nascondi giù, Mostra su) ---
